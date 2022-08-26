@@ -1,0 +1,1 @@
+export type TRNAgentRole = 'Controller' | 'Duelist' | 'Initiator' | 'Sentinel';

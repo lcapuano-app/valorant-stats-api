@@ -1,9 +1,26 @@
 import { Unprocessable } from "@feathersjs/errors";
 import { HookContext } from "@feathersjs/feathers";
 import { TRK_URLS } from "../../services/tracker/tracker.consts";
-import { TrackerPlaylistType, TrackerRequest } from "../../types/tracker-api";
+import { TrackerPlaylistType, TrackerRequest, TRNProfile } from "../../types/tracker-api";
 
+const SEARCH_LIMIT_MIN = 30;
 export class TrackerController {
+
+  static profileResponses: TRNProfile[] = []
+
+  static cacheSearchProfile( riotIdFull: string ): TRNProfile {
+
+    if ( !riotIdFull )
+      return <TRNProfile>{};
+
+    const idx = this.profileResponses.findIndex( res => this.findRankResponse( res, riotIdFull ) );
+
+    if ( idx < 0 )
+      return <TRNProfile>{};
+
+    return this.profileResponses[idx];
+
+  }
 
   static getTrackerUrl ( playlist: TrackerPlaylistType, riotId: string ): string {
     playlist = playlist.toUpperCase() as TrackerPlaylistType; // ENSURES UPPER
@@ -43,6 +60,51 @@ export class TrackerController {
     context.params.reqPayload = reqPayload;
 
     return context
+  }
+
+  static pushProfileResponse( profileRes: TRNProfile ): void {
+    const idx = this.profileResponses.findIndex( res => this.findRankResponse( res, profileRes?.platformInfo?.platformUserHandle, false ) );
+
+    if ( idx < 0 ) {
+      this.profileResponses.push( profileRes );
+      return;
+    }
+    this.profileResponses.splice( idx, 1 );
+    this.profileResponses.push( profileRes );
+    return;
+  }
+
+  static clearCache(): void {
+    this.profileResponses = [];
+
+    const dayMillis = 1000 * // Millis
+                      60   * // Seconds
+                      60   * // Minutes
+                      24;    // Hours
+
+    setTimeout(() => this.clearCache(), dayMillis );
+  }
+
+  private static findRankResponse( res: TRNProfile, riotId: string, useDate = true ): boolean {
+
+    const sameRiotId: boolean = ( res?.platformInfo.platformUserHandle?.toLowerCase().trim() == riotId?.toLowerCase().trim() );
+
+    if ( !useDate )
+      return sameRiotId;
+
+
+    if ( !res?.date )
+      return false;
+
+    if ( !sameRiotId )
+      return false;
+
+    const nowMillis: number = new Date().getTime();
+    const prevMillis: number = new Date( res.date ).getTime();
+    const diffMillis: number = nowMillis - prevMillis;
+    const diffMin: number = diffMillis / 1000 / 60;
+
+    return diffMin <= SEARCH_LIMIT_MIN;
   }
 
 }

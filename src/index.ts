@@ -2,6 +2,7 @@ import logger from './logger';
 import app from './app';
 import { DiscordBot } from './discord-bot';
 import { HenrikController } from './controllers/henrik-api';
+import { TrackerController } from './controllers/tracker-api';
 
 const port = app.get('port');
 const server = app.listen(port);
@@ -14,4 +15,5 @@ server.on('listening', () => {
   logger.info('Feathers application started on http://%s:%d', app.get('host'), port)
   DiscordBot.getInstance();
   HenrikController.clearCache();
+  TrackerController.clearCache();
 });

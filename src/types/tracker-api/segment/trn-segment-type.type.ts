@@ -1,0 +1,1 @@
+export type TRNSegmentType = 'playlist' | 'agent' | 'recent';
