@@ -2,7 +2,7 @@ import { GenericAny } from "../../generic-any.type";
 
 export interface TRNPlatformInfo extends GenericAny {
   platformId?            : string,
-  platformSlug           : 'riot',
+  platformSlug           : any,
   platformUserIdentifier : string,
   platformUserId         : string,
   platformUserHandle     : string,

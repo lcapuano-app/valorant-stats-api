@@ -3,7 +3,7 @@ import { REST, RequestData, Routes } from 'discord.js';
 import app from '../app';
 import logger from '../logger';
 import { BotSlashCommand } from './discor-bot.types';
-import { RankHandler } from './inter-handlers';
+import { RankHandler, StatsHandler } from './inter-handlers';
 import { BOT_CMDS } from './slash-commands';
 
 export class BotInteraction {
@@ -44,6 +44,10 @@ export class BotInteraction {
 
       case 'rank':
         await RankHandler.reply( interaction );
+        break;
+
+      case 'stats':
+        await StatsHandler.reply( interaction );
         break;
 
       default:

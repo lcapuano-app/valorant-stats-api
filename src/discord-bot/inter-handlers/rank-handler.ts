@@ -30,4 +30,17 @@ export class RankHandler extends HandlerCommon {
     return this.embedSuccess( res.data, res.trackerProfile );
 
   }
+
+  static embedSuccess( data: HenrikApiRankResData, profileUrl: string ): EmbedBuilder {
+    const embed = new EmbedBuilder()
+      .setTitle( data?.name )
+      .setURL( profileUrl )
+      .setAuthor({
+        name: `${data?.currenttierpatched} (${data?.ranking_in_tier})`,
+        iconURL: data?.images?.large
+      })
+      .setFooter({ text: profileUrl });
+
+    return embed;
+  }
 }
