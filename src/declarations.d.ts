@@ -1,4 +1,5 @@
 import { Application as ExpressFeathers } from '@feathersjs/express';
+import { HookContext, Service } from '@feathersjs/feathers';
 import { Client, REST } from 'discord.js'
 // A mapping of service names to types. Will be extended in service files.
 export interface ServiceTypes {}
@@ -11,4 +12,6 @@ export interface AppExtraDiscord {
 export interface ApplicationCustom {
   discord?: AppExtraDiscord
 }
-export type Application = ExpressFeathers<ServiceTypes> & ApplicationCustom;
+export type Application = ExpressFeathers<ServiceTypes>// & ApplicationCustom;
+
+export type HookResponse = Promise<HookContext<any, Service<any>>>

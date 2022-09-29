@@ -1,6 +1,5 @@
 import logger from './logger';
 import app from './app';
-import { DiscordBot } from './discord-bot';
 import { HenrikController } from './controllers/henrik-api';
 import { TrackerController } from './controllers/tracker-api';
 
@@ -13,7 +12,6 @@ process.on('unhandledRejection', (reason, p) =>
 
 server.on('listening', () => {
   logger.info('Feathers application started on http://%s:%d', app.get('host'), port)
-  DiscordBot.getInstance();
   HenrikController.clearCache();
   TrackerController.clearCache();
 });

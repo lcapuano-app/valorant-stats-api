@@ -23,6 +23,11 @@
     "node": ">16.0.0",
     "npm": ">= 3.0.0"
   },
+  "imports": {
+    "#quotes": "./config/quotes.json",
+    "#bot-quotes-img": "./public/bot-quotes",
+    "#fonts-robot-gold-24": "./config/fonts/Roboto-BoldItalic/roboto-gold-24.fnt"
+  },
   "scripts": {
     "test": "npm run lint && npm run compile && npm run mocha",
     "lint": "eslint src/. test/. --config .eslintrc.json --ext .ts --fix",
@@ -53,6 +58,7 @@
     "discord.js": "^14.3.0",
     "feathers-mongoose": "^8.5.1",
     "helmet": "^5.1.1",
+    "jimp": "^0.16.1",
     "mongodb-core": "^3.2.7",
     "mongoose": "^6.5.2",
     "selenium-webdriver": "^4.4.0",

@@ -87,7 +87,7 @@ export class TrackerController {
 
   private static findRankResponse( res: TRNProfile, riotId: string, useDate = true ): boolean {
 
-    const sameRiotId: boolean = ( res?.platformInfo.platformUserHandle?.toLowerCase().trim() == riotId?.toLowerCase().trim() );
+    const sameRiotId: boolean = ( res?.platformInfo?.platformUserHandle?.toLowerCase().trim() == riotId?.toLowerCase().trim() );
 
     if ( !useDate )
       return sameRiotId;

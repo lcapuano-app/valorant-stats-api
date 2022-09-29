@@ -4,5 +4,6 @@ export interface TrackerUrls {
   MATCH    : string,
   OVERVIEW : string,
   PROFILE  : string,
+  SEARCH   : string,
   WEAPON   : string
 }
